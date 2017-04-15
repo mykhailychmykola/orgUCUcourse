@@ -15,8 +15,6 @@ public class InjectRandomIntObjectConfigurerImpl implements ObjectConfigurer {
         Class<?> type = t.getClass();
         Field[] fields = type.getDeclaredFields();
         for (Field field : fields) {
-            System.out.println(field);
-            System.out.println(field.isAnnotationPresent(InjectRandomInt.class));
             if (field.isAnnotationPresent(InjectRandomInt.class)) {
                 InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
                 int min = annotation.min();

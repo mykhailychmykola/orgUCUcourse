@@ -9,9 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
     public static void main(String[] args) {
         ObjectFactory factory = ObjectFactory.getInstance();
-//        IRobot iRobot = factory.createObject(IRobot.class);
-//        iRobot.cleanRoom();
-        Elf elf = factory.createObject(Elf.class);
-        System.out.println(elf);
+        IRobot iRobot = factory.createObject(IRobot.class);
+        iRobot.cleanRoom();
+
     }
 }
