@@ -4,10 +4,9 @@ import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
 import javax.annotation.PostConstruct;
+import javax.swing.plaf.metal.MetalTheme;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,6 +40,20 @@ public class ObjectFactory {
         T t = type.newInstance();
         configure(t);
         invokeInitMethods(type, t);
+
+        if (type.isAnnotationPresent(Benchmark.class)) {
+            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (o, method, objects) -> {
+                System.out.println("*************BENCHMARK***************");
+                System.out.println(method.getName() + "was staeted");
+                Object retVal = method.invoke(t, objects);
+
+                System.out.println(method.getName() + "was finished");
+                System.out.println("*************BENCHMARK END***********");
+                return retVal;
+                }
+
+            );
+        }
 
         return t;
     }

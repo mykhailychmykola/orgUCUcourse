@@ -20,7 +20,10 @@ public class InjectByTypeObjectConfigurer implements ObjectConfigurer {
                 Object object = ObjectFactory.getInstance().createObject(field.getType());
                 field.set(t, object);
             }
-
         }
+    }
+
+    public void doX() {
+        System.out.println("XXXXXXXXXXXXXXX");
     }
 }
