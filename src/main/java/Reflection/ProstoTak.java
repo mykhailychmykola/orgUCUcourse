@@ -10,7 +10,9 @@ public class ProstoTak {
     public void doY() {
         System.out.println("YYYYYYY");
     }
-    public void initABC() {
+
+    @Run
+    public void ABC() {
         System.out.println("Started");
     }
 }

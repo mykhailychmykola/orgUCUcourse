@@ -12,7 +12,7 @@ public class ReflectionService {
         Method[] methods = type.getMethods();
         for (Method method : methods) {
             System.out.println(method.getName());
-            if (method.getName().startsWith("init")) {
+            if (method.isAnnotationPresent(Run.class)) {
                 method.invoke(o);
             }
         }
