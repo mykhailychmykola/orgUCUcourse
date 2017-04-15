@@ -3,8 +3,11 @@ package mySpring;
 import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
+import javax.annotation.PostConstruct;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,11 +38,20 @@ public class ObjectFactory {
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
         type = resolveImpl(type);
-
         T t = type.newInstance();
         configure(t);
+        invokeInitMethods(type, t);
 
         return t;
+    }
+
+    private <T> void invokeInitMethods(Class<T> type, T t) throws IllegalAccessException, InvocationTargetException {
+        Method[] methods = type.getMethods();
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(PostConstruct.class)) {
+                method.invoke(t);
+            }
+         }
     }
 
     private <T> void configure(T t) {
